@@ -1,468 +1,302 @@
-$(document).ready(function(){
 
+var game = {
+    //0 for char selet, 1 for defencer select, 2 for attack phase, 3 for game over
+    currentState: 0,
+    characterSelected: "",
+    characterObj: "",
+    defenderSelected: "",
+    defenderObj:"",
+    defendersLeft: 2
+};
+//animation object to help with disapearing damage div
+var damage = {
 
+    disapearAttacker:function()
+    {
+        $("#aDDone").animate({opacity: '0'});
+    },
 
-/**
- * The long description of the file's purpose goes here and
- * describes in detail the complete functionality of the file.
- * This description can span several lines and ends with a period.
- *
- * @summary   A short description of the file.
- *
- * http://usejsdoc.org/
- * @link      URL
- * @since     x.x.x (if available)
- * @requires javascriptlibrary.js
- * @class
- * @classdesc This is a description of the MyClass class.
- */
+    disapearDefender:function()
+    {
+        $("#dDDone").animate({opacity: '0'});
+    }
+};
 
+//character objects with individual healthPoints,
+//attackPoints, and counterAttackPoints.
 
+var char1 = {
+    healthPoint: 100,
+    attackPoints: 6,
+    counterAttackPoints: 20,
+    charHealthUpdate: function(AtkDmg)
+    {
+        this.healthPoint -= AtkDmg;
+        $("#char1HP").text(this.healthPoint);
+    },
+    charAttackPointsUpdate: function()
+    {
+        this.attackPoints *= 2;
+    }
+};
 
+var char2 = {
+    healthPoint: 150 ,
+    attackPoints: 10,
+    counterAttackPoints:30,
+    charHealthUpdate: function(AtkDmg)
+    {
+        this.healthPoint -= AtkDmg;
+        $("#char2HP").text(this.healthPoint);
+    },
+    charAttackPointsUpdate: function()
+    {
+        this.attackPoints *= 2;
+    }
+};
+
+var char3 = {
+    healthPoint: 175,
+    attackPoints: 2,
+    counterAttackPoints: 45,
+    charHealthUpdate: function(AtkDmg)
+    {
+        this.healthPoint -= AtkDmg;
+        $("#char3HP").text(this.healthPoint);
+    },
+    charAttackPointsUpdate: function()
+    {
+        this.attackPoints *= 2;
+    }
+};
+
+var char4 = {
+    healthPoint: 125,
+    attackPoints: 15,
+    counterAttackPoints: 15,
+    charHealthUpdate: function(AtkDmg)
+    {
+        this.healthPoint -= AtkDmg;
+        $("#char4HP").text(this.healthPoint);
+    },
+    charAttackPointsUpdate: function()
+    {
+        this.attackPoints *= 2;
+    }
+};
+
+var char5 = {
+    healthPoint: 175,
+    attackPoints: 2,
+    counterAttackPoints: 45,
+    charHealthUpdate: function(AtkDmg)
+    {
+        this.healthPoint -= AtkDmg;
+        $("#char5HP").text(this.healthPoint);
+    },
+    charAttackPointsUpdate: function()
+    {
+        this.attackPoints *= 2;
+    }
+};
+
+var char6 = {
+    healthPoint: 125,
+    attackPoints: 15,
+    counterAttackPoints: 15,
+    charHealthUpdate: function(AtkDmg)
+    {
+        this.healthPoint -= AtkDmg;
+        $("#char6HP").text(this.healthPoint);
+    },
+    charAttackPointsUpdate: function()
+    {
+        this.attackPoints *= 2;
+    }
+};
+
+//initilize character divs to variables for dynamic manipulation later on
+
+var char1Div = $("#char1");
+var char2Div = $("#char2");
+var char3Div = $("#char3");
+var char4Div = $("#char4");
+var char5Div = $("#char5");
+var char6Div = $("#char6");
+
+//When a character div is selected
+$(".char").on("click", function(){
+    //if game is in character select state
+    if (game.currentState == 0)
+    {
+        //player chooses a character
+        game.characterSelected = $(this).attr("id");
+        $("#" + game.characterSelected).remove();
+        $("#instructions").text("Choose a defender");
+
+        //position new attacker into attacker div
+        if (game.characterSelected == "char1")
+        {
+            game.characterObj = char1;
+            $(".attacker").append(char1Div);
+            $("#char1").css("position","relative");
+            $("#char1").css("top","300px");
+        }
+
+        if (game.characterSelected == "char2")
+        {
+            game.characterObj = char2;
+            $(".attacker").append(char2Div);
+            $("#char2").css("position","relative");
+            $("#char2").css("top","300px");
+        }
+
+        if (game.characterSelected == "char3")
+        {
+            game.characterObj = char3;
+            $(".attacker").append(char3Div);
+            $("#char3").css("position","relative");
+            $("#char3").css("top","300px");
+        }
+
+        if (game.characterSelected == "char4")
+        {
+            game.characterObj = char4;
+            $(".attacker").append(char4Div);
+            $("#char4").css("position","relative");
+            $("#char4").css("top","300px");
+        }
+
+        if (game.characterSelected == "char5")
+        {
+            game.characterObj = char5;
+            $(".attacker").append(char5Div);
+            $("#char3").css("position","relative");
+            $("#char3").css("top","300px");
+        }
+
+        if (game.characterSelected == "char6")
+        {
+            game.characterObj = char6;
+            $(".attacker").append(char6Div);
+            $("#char4").css("position","relative");
+            $("#char4").css("top","300px");
+        }
+
+        //progresses game to defender select state
+        game.currentState++;
+    }
+
+    //if game is defender select state
+    else if (game.currentState == 1)
+    {
+        //select defender
+        game.defenderSelected = $(this).attr("id");
+        $("#" + game.defenderSelected).remove();
+        $("#instructions").text("Commence the attack!");
+
+        //position new defender into defender div
+        if (game.defenderSelected == "char1")
+        {
+            game.defenderObj = char1;
+            $(".defender").append(char1Div);
+            $("#char1").css("position","relative");
+            $("#char1").css("top","300px");
+        }
+
+        if (game.defenderSelected == "char2")
+        {
+            game.defenderObj = char2;
+            $(".defender").append(char2Div);
+            $("#char2").css("position","relative");
+            $("#char2").css("top","300px");
+        }
+
+        if (game.defenderSelected == "char3")
+        {
+            game.defenderObj = char3;
+            $(".defender").append(char3Div);
+            $("#char3").css("position","relative");
+            $("#char3").css("top","300px");
+        }
+
+        if (game.defenderSelected == "char4")
+        {
+            game.defenderObj = char4;
+            $(".defender").append(char4Div);
+            $("#char4").css("position","relative");
+            $("#char4").css("top","300px");
+        }
+
+        if (game.defenderSelected == "char5")
+        {
+            game.defenderObj = char5;
+            $(".defender").append(char5Div);
+            $("#char5").css("position","relative");
+            $("#char5").css("top","300px");
+        }
+
+        if (game.defenderSelected == "char6")
+        {
+            game.defenderObj = char6;
+            $(".defender").append(char6Div);
+            $("#char6").css("position","relative");
+            $("#char6").css("top","300px");
+        }
+
+        //progresses game to attack phase state
+        game.currentState++;
+
+    }
 
 });
 
 
-var helloWorldHeading = document.querySelector('h1');
-helloWorldHeading.textContent = 'Hello world!';
-
-
-/**
- * button fade
- */
-
-// $(document).ready(function(){
-//
-//     $('div').mouseenter(function(){
-//
-//         $('div').fadeTo('fast', 1);
-//
-//         $('div').mouseleave(function(){
-//
-//             $('div').fadeTo('fast', 0.5);
-//
-//         });
-//
-//     });
-// });
-
-/**
- * object fade out
- */
-
-// $(document).ready(function() {
-//     $('div').click(function() {
-//         $('div').fadeOut('slow');
-//     });
-// });
-
-
-/**
- * fade in slow
- */
-
-// $(document).ready(function(){
-//     $('div').fadeIn('slow')
-//
-// });
-
-
-/**
- * button click fade out
- */
-
-// $(document).ready(function() {
-//     $('button').click(function() {
-//         $('#blue').fadeOut('slow');
-//     });
-// });
-
-
-/**
- * using: $(this) handler to fadeOut a clicked object
- */
-
-// $(document).ready(function() {
-//     $('div').click(function() {
-//         $(this).fadeOut('slow');
-//     });
-// });
-
-
-/**
- * Moving elements around
- */
-
-// $(document).ready(function() {
-//     $('#one').after("<p>any text I like</p>");
-//     var $paragraph = $('p');
-//     $('#two').after($paragraph);
-// });
-
-
-/**
- * removing elements
- */
-
-// $(document).ready(function() {
-//     $('#one').after("<p>any text I like</p>");
-//     var $paragraph = $('p');
-//     $('#two').after($paragraph);
-//     $('p').remove();
-// });
-
-/**
- * Adding and removing classes
- */
-
-// $(document).ready(function(){
-//     $("#text").click(function(){
-//         $(this).addClass("highlighted");
-//     });
-// });
-
-/**
- * Toggling Classes
- */
-
-// $(document).ready(function(){
-//     $("#text").click(function(){
-//         $(this).toggleClass("highlighted");
-//     });
-// });
-
-
-/**
- * Changing your style
- */
-
-// $(document).ready(function(){
-//
-//     $("div").height("200px");
-//     $("div").width("200px");
-//     $("div").css("border-radius","10px");
-//
-// });
-
-
-/**
- * Modifying Content
- */
-
-// $(document).ready(function(){
-//
-//     $('p').html("jQuery magic in action!");
-//
-// });
-
-/**
- * Click da button! do it naoughw!
- */
-
-// $(document).ready(function(){
-//
-//     $('#button').click(function(){
-//
-//         var toAdd = $('input[name=checkListItem]').val();
-//
-//     });
-// });
-
-
-/**
- * Append to body
- */
-
-// $(document).ready(function(){
-//     $('#button').click(function(){
-//         var toAdd = $('input[name=checkListItem]').val();
-//         $('.list').append('<div class="item">' + toAdd + '</div>' );
-//     });
-// });
-
-/**
- * Remove what's been clicked
- */
-
-// $(document).ready(function(){
-//     $('#button').click(function(){
-//         var toAdd = $('input[name=checkListItem]').val();
-//         $('.list').append('<div class="item">' + toAdd + '</div>' );
-//     });
-//
-//     $(document).on('click', '.item', function(){
-//         $(this).remove(this);
-//
-//     });
-// });
-
-/**
- *  Adding an event handler
- */
-
-// $(document).ready(function(){
-//
-//     $('div').click(function(){
-//
-//         $(this).fadeOut('fast');
-//     });
-//
-// });
-
-
-/**
- * Combining .click() and .hover()
- */
-
-// $(document).ready(function(){
-//
-//     $('div').click(function(){
-//
-//         $(this).fadeOut('fast');
-//
-//         $('div').addClass('red');   // or $(this).addClass('red');
-//
-//     });
-//
-// });
-
-/**
- *  The .dblclick() Event
- */
-
-// $(document).ready(function(){
-//
-//     $('div').dblclick(function(){
-//
-//         $(this).fadeOut('fast');
-//
-//     });
-//
-// });
-
-
-/**
- * Hover (color of buttons change when mouse goes over them)
- */
-
-// $(document).ready(function(){
-//
-//     $('div').hover(
-//         function(){
-//             $(this).addClass('active');
-//         },
-//         function(){
-//             $(this).removeClass('active');
-//         }
-//     );
-//
-// });
-
-
-/**
- * Let's .focus()! turn a text box's highlight blue into another color when clicked
- */
-
-// $(document).ready(function(){
-//
-//     $('input').focus(function(){
-//
-//         $(this).css('outline-color', '#FF0000');
-//
-//     });
-//
-// });
-
-
-/**
- * The .keydown() Event
- */
-
-// $(document).ready(function(){
-//
-//     $(document).keydown(function(){
-//
-//         $('div').animate({left:'+=10px'}, 500);
-//
-//     });
-//
-// });
-
-
-/**
- * Filling out the cases
- */
-
-// $(document).ready(function() {
-//     $(document).keydown(function(key) {
-//         switch(parseInt(key.which,10)) {
-//             // Left arrow key pressed
-//             case 37:
-//                 $('img').animate({left: "-=10px"}, 'fast');
-//                 break;
-//             // Up Arrow Pressed
-//             case 38:
-//                 $('img').animate({down: "-=10px"}, 'fast');
-//                 // Put our code here
-//                 break;
-//             // Right Arrow Pressed
-//             case 39:
-//                 $('img').animate({left: "+10px"}, 'fast');
-//                 // Put our code here
-//                 break;
-//             // Down Arrow Pressed
-//             case 40:
-//                 $('img').animate({down: "+10px"}, 'fast');
-//                 // Put our code here
-//                 break;
-//         }
-//     });
-// });
-
-
-/**
- *  More Practice with .animate()
- */
-
-// $(document).ready(function() {
-//     $('img').animate({top:'+=100px'},1000);
-// });
-
-
-/**
- *  jQuery UI Link --------------------------------------------------------------
- */
-
-//    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-
-
-/**
- *  Introducing: jQuery UI
- */
-
-// $(document).ready(function(){
-//
-//     $('div').click(function(){
-//
-//         $(this).effect('explode');
-//
-//     });
-//
-// });
-
-
-/**
- * .bounce()
- */
-
-// $(document).ready(function(){
-//
-//     $('div').click(function(){
-//
-//         $(this).effect('bounce', {times:3}, 500);
-//
-//     });
-//
-// });
-
-
-/**
- * .slide()
- */
-
-// $(document).ready(function(){
-//
-//     $('div').click(function(){
-//
-//         $(this).effect('slide');
-//
-//     });
-//
-// });
-
-
-/**
- *  Special Effects (the menu bar)
- */
-
-// $(document).ready(function() {
-//     $("#menu").accordion({collapsible: true, active: false});
-// });
-
-
-/**
- *  Drag Racing
- */
-
-// $(document).ready(function(){
-//
-//     $('#car').draggable()
-//
-// });
-
-
-/**
- *  One resize fits all
- */
-
-// $(document).ready(function(){
-//
-//     $('div').resizable()
-//
-// });
-
-
-
-/**
- *  A greater selection (can select things inside a list)
- */
-
-
-// $(document).ready(function(){
-//
-//     $('ol').selectable()
-//
-// });
-
-
-/**
- *  Let's sort things out (can move things inside a list up and down)
- */
-
-// $(document).ready(function(){
-//
-//     $('ol').sortable()
-//
-// });
-
-
-/**
- *  Break out your .accordion()! (click on item in list and sublist will drop down)
- */
-
-// $(document).ready(function(){
-//
-//     $('#menu').accordion()
-//
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$(".attkButton").on("click", function(){
+    //if game is in attack phase
+    if(game.currentState==2)
+    {
+        //attacker always hits first
+        game.defenderObj.charHealthUpdate(game.characterObj.attackPoints);
+        //display damage done on window
+        $("#dDDone").text("-" + game.characterObj.attackPoints);
+        $("#dDDone").css("opacity", 1);
+        setTimeout(damage.disapearDefender, 1500);
+        //update character damage
+        game.characterObj.charAttackPointsUpdate();
+
+        //if player has won the game
+        if ((game.defenderObj.healthPoint<=0) && (game.defendersLeft == 0))
+        {
+            $("#instructions").text("You Win!");
+            $("#" + game.defenderSelected).remove();
+            //progress to game over state
+            game.currentState++;
+        }
+        //if a defender is defeated, however there are more defenders left
+        else if(game.defenderObj.healthPoint<=0)
+        {
+            $("#instructions").text("Choose a defender");
+            $("#" + game.defenderSelected).remove();
+            //back to defender select state
+            game.currentState--;
+            game.defendersLeft--;
+        }
+        //when player takes damage
+        if(game.currentState==2)
+        {
+            game.characterObj.charHealthUpdate(game.defenderObj.counterAttackPoints);
+            $("#aDDone").text("-" + game.defenderObj.counterAttackPoints);
+            $("#aDDone").css("opacity", 1);
+            setTimeout(damage.disapearAttacker, 1500);
+            //if player loses game
+            if(game.characterObj.healthPoint<=0)
+            {
+                $("#instructions").text("You Lose!");
+                //progress to gameover state
+                game.currentState++
+            }
+        }
+    }
+
+});

@@ -1,29 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-
-    <title></title>
-
+    <title>The Death Division</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P|Geostar+Fill' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-    <!-- Add Bootstrap Themes Here (Just uncomment the ones below for example)-->
-    <!--<link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css">-->
-    <!--<link rel="stylesheet" href="https://bootswatch.com/cyborg/bootstrap.min.css">-->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/rest.css">
-
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-    <script src="assets/javascript/game.js"></script>
-
-
-
 </head>
-
-
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="jumbotron">
+                <h1 id="instructions">Choose your Country</h1>
+                <button class="btn btn-danger attkButton">Attack!</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 attackerDamage">
+            <h3 id="aDDone">-20</h3>
+        </div>
+        <div class="col-sm-1 attacker">
 
+        </div>
+        <div class="col-sm-6 charSelect">
+            <div class= "char" id="char1">
+                <h2 id="char1HP">100</h2>
+                <img src="assets/css/images/AmericanFlag.jpg">
+            </div>
+            <div class= "char" id="char2">
+                <h2 id="char2HP">150</h2>
+                <img src="assets/css/images/BritishFlag.jpg">
+            </div>
+            <div class= "char" id="char3">
+                <h2 id="char3HP">175</h2>
+                <img src="assets/css/images/CanadianFlag.jpg">
+            </div>
+            <div class= "char" id="char4">
+                <h2 id="char4HP">125</h2>
+                <img src="assets/css/images/GermanFlag.jpg">
+            </div>
+            <div class= "char" id="char5">
+                <h2 id="char5HP">200</h2>
+                <img src="assets/css/images/PolishFlag.jpg">
+            </div>
+            <div class= "char" id="char6">
+                <h2 id="char6HP">225</h2>
+                <img src="assets/css/images/RussianFlag.jpg">
+            </div>
+        </div>
+        <div class="col-sm-1 defender">
 
+        </div>
+        <div class="col-sm-2 defenderDamage">
+            <h3 id="dDDone">-20</h3>
+        </div>
+    </div>
+</div>
+<script src="assets/javascript/game.js"></script>
 </body>
 </html>
