@@ -86,8 +86,8 @@ var char4 = {
 };
 
 var char5 = {
-    healthPoint: 175,
-    attackPoints: 2,
+    healthPoint: 200,
+    attackPoints: 10,
     counterAttackPoints: 45,
     charHealthUpdate: function(AtkDmg)
     {
@@ -101,8 +101,8 @@ var char5 = {
 };
 
 var char6 = {
-    healthPoint: 125,
-    attackPoints: 15,
+    healthPoint: 225,
+    attackPoints: 25,
     counterAttackPoints: 15,
     charHealthUpdate: function(AtkDmg)
     {
